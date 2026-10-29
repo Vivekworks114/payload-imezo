@@ -18,6 +18,7 @@ import { isSuperAdmin } from './access/isSuperAdmin'
 import { ciGithubTokenEndpoint } from './endpoints/ciGithubToken'
 import { ciCloudflareCredentialsEndpoint } from './endpoints/ciCloudflareCredentials'
 import { scheduledPublishEndpoint } from './endpoints/scheduledPublish'
+import { reloadSecretsEndpoint } from './endpoints/reloadSecrets'
 import { r2StoragePlugin } from './lib/r2Storage'
 
 const dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -51,6 +52,7 @@ export default buildConfig({
         Logo: '/components/AdminBrand#AdminLogo',
         Icon: '/components/AdminBrand#AdminIcon',
       },
+      beforeDashboard: ['/components/ReloadSecrets.client#ReloadSecretsPanel'],
       providers: [
         {
           path: '@/components/TotpHardRedirect.client#TotpHardRedirect',
@@ -61,7 +63,12 @@ export default buildConfig({
 
   collections: [Tenants, Users, BlogPosts, Media, GithubCredentials, CloudflareCredentials],
 
-  endpoints: [ciGithubTokenEndpoint, ciCloudflareCredentialsEndpoint, scheduledPublishEndpoint],
+  endpoints: [
+    ciGithubTokenEndpoint,
+    ciCloudflareCredentialsEndpoint,
+    scheduledPublishEndpoint,
+    reloadSecretsEndpoint,
+  ],
 
   editor: lexicalEditor({}),
 
